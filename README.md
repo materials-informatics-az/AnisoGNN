@@ -7,9 +7,28 @@ conda create --name Aniso python=3.9
 conda activate Aniso
 pip install -r requirements.txt
 ```
+## Dream3D scripts
+run_equi.py: generate 25 MVEs as dream3d files based on equiaxed.json for each texture.
+
+run_equi.m: create orientation data (in euler angles) as txt files based on ODF data of each texture.
+
+yaml_gen.py: generate material.yaml for DAMASK analysis and create orientation data (in quaternions).
+
+grain_ids.m: generate grain ids as numpy array.
+
+C_tensor.m: create elasticity stiffness tensors and save 21 elements in txt files.
+
+S_tensor.m: create Schmid tensors and save 108 elements in txt files.
+
+## DAMASK scripts
+tensionX_Al.yaml: loading file for Al, including 3 increments, elasticity deformation at the 2nd increment, yield point at the 3rd increment.
+
+tensionX_Ni.yaml: loading file for Ni, including 2 increments, elasticity deformation at the 2nd increment.
+
+post_processing.py: analyze DAMASK output hdf5 files and collect Young's modulus from the 2nd increment and yield strength from the 3rd increment
 
 ## HDF5 Files
-Grain IDs, euler angles for each grain and the mechanical property of RVEs are stored in Ni_raw_data.hdf5 and Al_raw_data.hdf5. 
+Grain IDs, euler angles for each grain and the mechanical property of MVEs are stored in Ni_raw_data.hdf5 and Al_raw_data.hdf5. 
 
 First layer: 12 textures, including
   Uniaxial Compression (0/45/90 degrees rotations),
@@ -17,12 +36,18 @@ First layer: 12 textures, including
   Plane Strain Compression (0/45/90 degrees rotations),
   Simple Shear (0/45/90 degrees rotations);
 
-Second layer: 25 RVEs per texture and arrays storing E_modulus and yield_strength of RVEs; 
+Second layer: 25 MVEs per texture and arrays storing E_modulus and yield_strength of MVEs; 
 
-Third layer: Grain IDs and euler angles from each RVE. 
+Third layer: Grain IDs, euler angles, quaternions, C-tensor, S-tensor of each grain from each MVE. 
+
+## Create Graphs
+Microstructure graphs for all 300 MVEs have already been created in the graphs folder. The method to create those graph files (this process may take more than 20h on regular CPU, multi-processing is recommended):
+```bash
+python create_graphs.py
+```
 
 ## Prepare Data
-PyTorch datalists for graphs and RVE mechanical properties have been created as pickle files and saved in graph_data folder. The method to create those pickle files:
+PyTorch datalists for graphs and MVE mechanical properties have been created as pickle files and saved in graph_data folder. The method to create those pickle files:
 ```bash
 python write_data.py
 ```

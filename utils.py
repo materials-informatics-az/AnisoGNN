@@ -8,6 +8,76 @@ import torch
 from torch_geometric.loader import DataLoader
 
 
+def make_pdc(micro):
+    '''Pads 3D array with opposing faces.
+
+    Parameters
+    ----------
+    micro : {ndarray}
+        3D array of grain IDs.
+
+    Returns
+    -------
+    micro : {ndarray}
+        3D array of grain IDs with periodic faces.
+    '''
+    micro = np.pad(micro, 1)
+    micro[0, :, :] = micro[-2, :, :]
+    micro[-1, :, :] = micro[1, :, :]
+    micro[:, 0, :] = micro[:, -2, :]
+    micro[:, -1, :] = micro[:, 1, :]
+    micro[:, :, 0] = micro[:, :, -2]
+    micro[:, :, -1] = micro[:, :, 1]
+    return micro
+
+
+def get_nbrs(micro, periodic=True):
+    '''Get neighbors of grains.
+
+    Parameters
+    ----------
+    micro : {ndarray}
+        3D array of grain IDs.
+        *DONT USE grain ID == 0*
+
+    Returns
+    -------
+    nbr_dict : {dictionary} {grain_ID : [nbrs, shared_area]}
+        Dictionary giving neighbors and shared area of each neighbor for every grain.
+    '''
+    if periodic:
+        micro = make_pdc(micro)
+    else:
+        micro = np.pad(micro, 1)
+
+    dim = micro.shape
+
+    # structure element used to get voxel face neighbors
+    s = np.zeros((3, 3, 3))
+    s[1, 1, :] = 1
+    s[1, :, 1] = 1
+    s[:, 1, 1] = 1
+    s[1, 1, 1] = 0
+
+    nbr_dict = {}
+    for feat in np.unique(micro):
+        if feat == 0:
+            continue
+        nbr_list = []
+        for x in range(1, dim[0]-1):
+            for y in range(1, dim[1]-1):
+                for z in range(1, dim[2]-1):
+                    if micro[x, y, z] == feat:
+                        nbrs = s*micro[x-1:x+2, y-1:y+2, z-1:z+2]
+                        nbrs = nbrs[~np.isin(nbrs, [0, feat])]
+                        for nbr in nbrs:
+                            nbr_list.append(nbr)
+
+        nbrs, counts = np.unique(np.asarray(nbr_list), return_counts=True)
+        nbr_dict[feat] = [nbrs.astype(int), counts]
+    return nbr_dict
+
+
 def mean_maxARE(y_pred, y_true):
     '''Calcuate Mean, MaxARE
     '''

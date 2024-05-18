@@ -30,8 +30,8 @@ def natural_sort(l):
     return sorted(l, key=alphanum_key)
 
 
-Ni_raw_data = h5py.File('Ni_raw_data.hdf5', mode='r')
-Al_raw_data = h5py.File('Al_raw_data.hdf5', mode='r')
+Ni_raw_data = h5py.File('Ni_data.hdf5', mode='r')
+Al_raw_data = h5py.File('Al_data.hdf5', mode='r')
 
 cases = ['O-SAGE_Ni_E' , 'O-SAGE_Al_E' , 'O-SAGE_Al_YS' , 'C-Aniso_Ni_E' , 'C-Aniso_Al_E' , 'S-Aniso_Al_YS']
 textures = ['comp','uni','shear','psc','comp_rot_z-90','uni_rot_z-90','shear_rot_z-90','psc_rot_z-90','comp_rot_z-45','uni_rot_z-45','shear_rot_z-45','psc_rot_z-45']
