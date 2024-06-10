@@ -1,5 +1,6 @@
 import damask
 import numpy as np
+
 """
 This script processes material data in `.dream3d` format and saves it in other formats for further analysis.
 
@@ -8,6 +9,7 @@ Key Steps:
 2. Iterates through different textures and MVEs, reading data from input files.
 3. Applies rotations and configurations to generate new material data in the desired formats.
 """
+
 n_MVEs= 25
 textures = ['comp','uni','shear','psc']
 paths=[]

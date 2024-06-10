@@ -4,6 +4,14 @@ import glob
 import os
 import math
 
+'''
+This script performs post-processing on simulation results using the DAMASK library.
+It includes functions to calculate the von Mises stress and strain values for given tensors.
+The script processes HDF5 result files, adds stress and strain data, and computes equivalent Mises stress and strain.
+It calculates average stress and strain values across voxels for each increment, saves the results to text files,
+and computes Young's modulus based on the average values. The results are saved with filenames based on the current directory name.
+'''
+
 def Mises(what,tensor):
 	''' Calulate von Mises value for stress or strain tensor.
 	Source: DAMASK (http://damask.mpie.de).'''

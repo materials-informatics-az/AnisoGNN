@@ -1,6 +1,7 @@
 import json
 import os
 from subprocess import call
+
 """
 This script automates the process of generating `.dream3d` files for different textures and microstructural volume elements (MVEs).
 
@@ -12,6 +13,7 @@ Key Steps:
    - Saves the updated JSON to a new file.
    - Runs the pipeline executable with the generated JSON file to create the `.dream3d` files.
 """
+
 n_MVEs= 25
 textures = ['comp','uni','shear','psc']
 

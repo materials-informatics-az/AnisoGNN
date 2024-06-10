@@ -11,6 +11,15 @@ import time
 from utils import *
 from tqdm import tqdm
 
+'''
+This script trains and evaluates Graph Neural Networks (GNNs) using PyTorch and PyTorch Geometric.
+It includes utility functions for setting random seeds, defines custom message-passing convolution layers,
+and implements two GNN classes: a simple GNN using custom convolutions and a more complex SAGE model.
+The main script handles data loading, model initialization, training, testing, saving models,
+and visualizing the results. The script is structured to support various configurations and datasets,
+ensuring comprehensive evaluation of the models.
+'''
+
 def seed_all(seed):
     '''
     Set random seeds for reproducability

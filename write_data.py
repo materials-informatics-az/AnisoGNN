@@ -10,6 +10,15 @@ import torch_geometric
 from sklearn.preprocessing import StandardScaler
 from tqdm import tqdm
 
+'''
+This script processes raw data and prepares it for training Graph Neural Networks (GNNs).
+It includes functions for natural sorting and handles data loading, feature extraction, and scaling.
+The script processes data from HDF5 files for different material cases (e.g., Ni and Al) and textures,
+constructs graphs, scales features and properties, and saves the processed data and scalers.
+The processed data is saved in a format suitable for training GNNs, ensuring that the features and
+properties are properly normalized and ready for model input.
+'''
+
 def natural_sort(l):
     """Sort list in Natural order.
 

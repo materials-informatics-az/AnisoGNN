@@ -7,6 +7,12 @@ import seaborn as sns
 import torch
 from torch_geometric.loader import DataLoader
 
+'''
+This script provides utility functions for data processing and visualization in the context of Graph Neural Networks (GNNs).
+It includes functions for padding 3D arrays with periodic boundary conditions, extracting neighbors of grains, and data normalization.
+Additionally, it contains functions for saving and loading data, setting random seeds for reproducibility, and plotting results.
+These utilities are essential for preparing data, ensuring consistent experimental setups, and visualizing model performance in GNN-related tasks.
+'''
 
 def make_pdc(micro):
     '''Pads 3D array with opposing faces.
